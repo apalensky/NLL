@@ -5,7 +5,7 @@
 * Day - day of the week game was played
 * Date - date of game
 * Location - hosting team
-* # - jersey number
+* "# - jersey number
 * Name - player name
 * Captain - denotes Captain and Alternate Captains
 * Team - player's team
