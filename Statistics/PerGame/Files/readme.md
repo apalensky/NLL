@@ -21,3 +21,13 @@
 * FO_W - faceoff wins
 * FO - total faceoffs taken
 * TOF - time on floor
+
+#### Changes to Legend for all other files
+* Points - sum of goals and assists
+* PM - score differential while player is on the floor (replacement for +/-)
+* ....PG - statistic average per game
+* ....p60 - statistic per 60 minutes of floor time (only applicable to 2020 with recording of TOF)
+* ATO_ratio - assist to turnover ratio
+* FOpercent - faceoff percentage
+* ShootingPct - goals scored out of total shots taken
+* AdjShootingPct - goals scored out of shots on goal
