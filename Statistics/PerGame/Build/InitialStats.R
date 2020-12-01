@@ -51,7 +51,7 @@ dfDhane2020 = df %>%
 df2020 = df %>% 
     filter((Date >= "2019-11-29" & Date <= "2020-03-08")) %>%
     group_by(Name, Team) %>%
-    summarize(Points = sum(Points), G = sum(G), A = sum(A), PM = sum(PM), PIM = sum(PIM), S = sum(S),
+    summarize(Games = n(), Points = sum(Points), G = sum(G), A = sum(A), PM = sum(PM), PIM = sum(PIM), S = sum(S),
               SOFF = sum(SOFF), LB = sum(LB), TO = sum(TO), CT = sum(CT), FO_W = sum(FO_W),
               FO = sum(FO), TOF = sum(TOF)) %>%
     mutate(PointsPG = Points / Games, GPG = G / Games, APG = A / Games, PMPG = PM / Games,
@@ -69,6 +69,9 @@ df2020 = df %>%
            ShootingPct = G / (S + SOFF),
            AdjShootingPct = G / S
     )
+
+df2020path = 'C:/Users/alexa/OneDrive/Documents/Data Science/Projects/NLL/PerGameStats/2020StatsPerGameCombined.csv'
+write.csv(df2020, df2020path, row.names = FALSE)
 
 
 # 2019
