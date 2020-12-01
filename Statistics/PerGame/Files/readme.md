@@ -1,5 +1,5 @@
 ## This folder contains the file NLLFloorGameStats.csv, which contains all publicly available stats per game for NLL players
-#### Also in this folder are the scripts I used to scrape and clean the data. My scrape came from Sportslogiq, which stored box scores
+#### This file is derived from the Build folder which contains scripts I used to scrape and clean the data. My scrape came from Sportslogiq, which stored box scores
 
 #### Legend for NLLFloorGameStats.csv
 * Day - day of the week game was played
