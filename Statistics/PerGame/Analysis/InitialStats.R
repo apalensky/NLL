@@ -63,7 +63,7 @@ df2020 = df %>%
          
          Pointsp60 = (60 / TOF) * Points, Gp60 = (60 / TOF) * G, Ap60 = (60 / TOF) * A,
          LBp60 = (60 / TOF) * LB, CTp60 = (60 / TOF) * CT, PMp60 = (60 / TOF) * PM,
-         PIMp60 = (60 / TOF) * PIM, DVp60 = (60 / Devittes),
+         PIMp60 = (60 / TOF) * PIM, DVp60 = (60 / TOF) * Devittes,
          
          ATO_ratio = A / TO,
          PTO_ratio = Points / TO,

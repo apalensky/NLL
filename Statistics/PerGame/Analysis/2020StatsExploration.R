@@ -6,6 +6,7 @@ rm(list = ls())
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
+library(viridis)
 
 dffull <- read.csv("NLLFloorGameStats.csv")
 
@@ -46,7 +47,7 @@ df2020 = df %>%
          
          Pointsp60 = (60 / TOF) * Points, Gp60 = (60 / TOF) * G, Ap60 = (60 / TOF) * A,
          LBp60 = (60 / TOF) * LB, CTp60 = (60 / TOF) * CT, PMp60 = (60 / TOF) * PM,
-         PIMp60 = (60 / TOF) * PIM, DVp60 = (60 / Devittes),
+         PIMp60 = (60 / TOF) * PIM, DVp60 = (60 / TOF) *Devittes,
          
          ATO_ratio = A / TO,
          PTO_ratio = Points / TO,
@@ -56,21 +57,59 @@ df2020 = df %>%
          AdjShootingPct = G / S
   )
 
-avgTOF = mean(df2020$TOF, na.rm = TRUE)
-sdTOF = sd(df2020$TOF, na.rm = TRUE)
+
+avgPointsp60 = mean(df2020$Pointsp60, na.rm = TRUE)
+avgPointsp60
+sdPointsp60 = sd(df2020$Pointsp60, na.rm = TRUE)
+sdPointsp60
+
+avgDVp60 = mean(df2020$DVp60, na.rm = TRUE)
+avgDVp60
+sdDVp60 = sd(df2020$DVp60, na.rm = TRUE)
+sdDVp60
+
+avgPTO_ratio = mean(df2020$PTO_ratio, na.rm = TRUE)
+avgPTO_ratio
+sdDPTO_ratio = sd(df2020$PTO_ratio, na.rm = TRUE)
+sdDPTO_ratio
+
 
 dfPTO_ratio = df2020 %>% 
-  filter(TOF > (avgTOF-sdTOF), TO > 0, PointsPG > 1) %>%
+  filter(Pointsp60 > avgPointsp60 + sdPointsp60, TO > 0) %>%
   group_by(Name, Team) %>%
-  summarize(G, A, Points, TO, PTO_ratio, TOFPG, DVPG = (Points - TO)/ Games) %>%
-  filter(DVPG > 1.5)
+  summarize(G, A, Points, TO, TOFPG, PTO_ratio, DVp60, Pointsp60)
 
 
 
-plot1 = ggplot(data = dfPTO_ratio, aes(x=PTO_ratio, y=DVPG, color=TOFPG, alpha = 0.5)) + geom_point() + 
+plot1 = ggplot(data = dfPTO_ratio, aes(x=PTO_ratio, y=DVp60, color=TOFPG, alpha = 0.5)) + geom_point() + 
   geom_text(aes(label = Name, hjust = -.1)) + labs(title = "Points-to-Turnover Ratio vs. Devittes per game") +
-  scale_x_continuous(limits = c(1.5,6)) + scale_y_continuous(limits = c(1.5,4)) +
-  theme(legend.position = "bottom", axis.title.x = element_text("PTO_ratio"),axis.title.y = element_text("DVPG"),
-        legend.title = element_blank(), plot.title = element_text(hjust = 0.5)) + scale_colour_distiller(palette = "BrBG")
+  scale_x_continuous(limits = c(.6,6)) + scale_y_continuous(limits = c(-8,10.5)) +
+  theme(legend.position = "bottom", axis.title.x = element_text("PTO_ratio"),axis.title.y = element_text("DVp60"),
+        legend.title = element_blank(), plot.title = element_text(hjust = 0.5)) + scale_colour_distiller(palette = "YlOrRd")
 
 plot1
+
+
+plot2 = ggplot(data = dfPTO_ratio, aes(x=TOFPG, y=DVp60, color=PTO_ratio, alpha = 0.5)) + geom_point() + 
+  geom_text(aes(label = Name, hjust = -.1)) + labs(title = "Time on Floor per game vs. Devittes per game") +
+  scale_x_continuous(limits = c(9.8,26)) + scale_y_continuous(limits = c(-8,10.5)) +
+  theme(legend.position = "bottom", legend.title = element_text("PTO ratio"), plot.title = element_text(hjust = 0.5)) +
+  scale_color_viridis()
+
+plot2
+
+plot3 = ggplot(data = dfPTO_ratio, aes(x=TOFPG, y=PTO_ratio, color=DVp60, alpha = 0.5)) + geom_point() + 
+  geom_text(aes(label = Name, hjust = -.1)) + labs(title = "Time on Floor per game vs. Points-to-Turnover Ratio") +
+  scale_x_continuous(limits = c(9.8,26)) + scale_y_continuous(limits = c(.59,5.1)) +
+  theme(legend.position = "bottom", legend.title = element_text("DVp60"), plot.title = element_text(hjust = 0.5)) +
+  scale_color_viridis()
+
+plot3
+
+plot4 = ggplot(data = dfPTO_ratio, aes(x=TOFPG, y=Pointsp60, color=PTO_ratio, alpha = 0.5)) + geom_point() + 
+  geom_text(aes(label = Name, hjust = -.1)) + labs(title = "Time on Floor per game vs. Points per 60 minutes") +
+  scale_x_continuous(limits = c(9.8,26)) + scale_y_continuous(limits = c(10,17.7)) +
+  theme(legend.position = "bottom", legend.title = element_text("PTO ratio"), plot.title = element_text(hjust = 0.5)) +
+  scale_color_viridis()
+
+plot4
