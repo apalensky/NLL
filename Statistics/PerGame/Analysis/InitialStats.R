@@ -15,6 +15,8 @@
 
 #############################################################################################
 
+rm(list = ls())
+
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
@@ -53,17 +55,18 @@ df2020 = df %>%
   group_by(Name, Team) %>%
   summarize(Games = n(), Points = sum(Points), G = sum(G), A = sum(A), PM = sum(PM), PIM = sum(PIM), S = sum(S),
             SOFF = sum(SOFF), LB = sum(LB), TO = sum(TO), CT = sum(CT), FO_W = sum(FO_W),
-            FO = sum(FO), TOF = sum(TOF)) %>%
+            FO = sum(FO), TOF = sum(TOF), Devittes = (sum(Points) - sum(TO))) %>%
   mutate(PointsPG = Points / Games, GPG = G / Games, APG = A / Games, PMPG = PM / Games,
          PIMPG = PIM / Games, SPG = S / Games, SOFFPG = SOFF / Games, LBPG = LB / Games, 
          TOPG = TO / Games, CTPG = CT / Games, FO_WPG = FO_W / Games, FOPG = FO / Games,
-         TOFPG = TOF / Games,
+         TOFPG = TOF / Games, DVPG = Devittes / Games,
          
          Pointsp60 = (60 / TOF) * Points, Gp60 = (60 / TOF) * G, Ap60 = (60 / TOF) * A,
          LBp60 = (60 / TOF) * LB, CTp60 = (60 / TOF) * CT, PMp60 = (60 / TOF) * PM,
-         PIMp60 = (60 / TOF) * PIM,
+         PIMp60 = (60 / TOF) * PIM, DVp60 = (60 / Devittes),
          
-         ATO_ration = A / TO,
+         ATO_ratio = A / TO,
+         PTO_ratio = Points / TO,
          FOpercent = FO_W / FO,
          
          ShootingPct = G / (S + SOFF),
