@@ -79,7 +79,9 @@ dfPTO_ratio = df2020 %>%
   group_by(Name, Team) %>%
   summarize(G, A, Points, TO, TOFPG, PTO_ratio, DVp60, Pointsp60)
 
+#############################################################################################
 
+# Exploratory Analysis
 
 plot1 = ggplot(data = dfPTO_ratio, aes(x=PTO_ratio, y=DVp60, color=TOFPG, alpha = 0.5)) + geom_point() + 
   geom_text(aes(label = Name, hjust = -.1)) + labs(title = "Points-to-Turnover Ratio vs. Devittes per game") +
@@ -98,6 +100,7 @@ plot2 = ggplot(data = dfPTO_ratio, aes(x=TOFPG, y=DVp60, color=PTO_ratio, alpha 
 
 plot2
 
+
 plot3 = ggplot(data = dfPTO_ratio, aes(x=TOFPG, y=PTO_ratio, color=DVp60, alpha = 0.5)) + geom_point() + 
   geom_text(aes(label = Name, hjust = -.1)) + labs(title = "Time on Floor per game vs. Points-to-Turnover Ratio") +
   scale_x_continuous(limits = c(9.8,26)) + scale_y_continuous(limits = c(.59,5.1)) +
@@ -113,3 +116,34 @@ plot4 = ggplot(data = dfPTO_ratio, aes(x=TOFPG, y=Pointsp60, color=PTO_ratio, al
   scale_color_viridis()
 
 plot4
+
+
+#############################################################################################
+
+# Is Hellyer League MVP?
+# D. Bridle should play more
+
+
+# Idea that D. Bridle should play more
+
+
+dfBuffalo = df2020 %>% 
+  filter(Team == "Buffalo ")
+
+
+plot5 = ggplot(data = dfBuffalo, aes(x=TOFPG, y=Pointsp60, color=PTO_ratio, alpha = 0.5)) + geom_point() + 
+  geom_text(aes(label = Name, hjust = -.1)) + labs(title = "Buffalo Bandits Scoring Capabilities") +
+  scale_x_continuous(limits = c(9.8,26)) + scale_y_continuous(limits = c(0,16.3)) +
+  theme(legend.position = "bottom", legend.title = element_text("PTO ratio"), plot.title = element_text(hjust = 0.5)) +
+  scale_color_viridis()
+
+plot5
+
+
+plot6 = ggplot(data = dfBuffalo, aes(x=TOFPG, y=Pointsp60, color=DVp60, alpha = 0.5)) + geom_point() + 
+  geom_text(aes(label = Name, hjust = -.1)) + labs(title = "Buffalo Bandits Scoring Capabilities") +
+  scale_x_continuous(limits = c(9.8,26)) + scale_y_continuous(limits = c(0,16.3)) +
+  theme(legend.position = "bottom", legend.title = element_text("DVp60"), plot.title = element_text(hjust = 0.5)) +
+  scale_color_viridis()
+
+plot6
